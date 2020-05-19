@@ -14,7 +14,6 @@ stages:
   jobs:
   - job: SecondJob
     steps:
-    - bash: build SecondJob
     - bash: java -version
     - bash: mvn -version
     - bash: ls -R $(Build.ArtifactStagingDirectory)
