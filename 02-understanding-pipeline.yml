@@ -14,7 +14,7 @@ stages:
   jobs:
   - job: FirstJob
     steps:
-    - bash: echo build FirstJob
+    - bash: echo $(PipelineLevelVarible)  build FirstJob
   - job: SecondJob
     steps:
     - bash: echo build SecondJob
@@ -26,7 +26,7 @@ stages:
     - bash: echo build FirstJob
   - job: DevDeploySecondJob
     steps:
-    - bash: echo build SecondJob
+    - bash: echo build SecondJob $(PipelineLevelVarible) 
 - stage: QADeploy
   dependsOn: DevDeploy
   jobs:
