@@ -16,14 +16,10 @@ strategy:
 pool:
   vmImage: $(operatingSystem)
 
-stages: 
-- stage: Build
-  jobs:
-  - job: SecondJob
-    steps:
-    - bash: java -version
-    - bash: mvn -version
-    - bash: ls -R $(Build.ArtifactStagingDirectory)
+steps:
+- bash: java -version
+- bash: mvn -version
+- bash: ls -R $(Build.ArtifactStagingDirectory)
     # - task: CopyFiles@2
     #   inputs:
     #     SourceFolder: '$(System.DefaultWorkingDirectory)'
