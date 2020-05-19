@@ -18,29 +18,15 @@ stages:
   - job: SecondJob
     steps:
     - bash: echo build SecondJob
-- stage: DevDeploy
-  dependsOn: Build
-  jobs:
-  - job: DevDeployFirstJob
-    steps:
-    - bash: echo build FirstJob
-  - job: DevDeploySecondJob
-    steps:
-    - bash: echo build SecondJob $(PipelineLevelVarible) 
-- stage: QADeploy
-  dependsOn: DevDeploy
-  jobs:
-  - job: QADeployFirstJob
-    steps:
-    - bash: echo build FirstJob
-  - job: QADeploySecondJob
-    steps:
-    - bash: echo build SecondJob
-- stage: ProdDeploy
-  jobs:
-  - job: PrdDeployFirstJob
-    steps:
-    - bash: echo build FirstJob
-  - job: ProdDeploySecondJob
-    steps:
-    - bash: echo build SecondJob
+    - bash: echo java -version
+    - bash: echo mvn -version
+    - bash: ls -R echo $(Build.ArtifactStagingDirectory)
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
+        Contents: |
+          **/*.yaml
+          **/*.tf
+        TargetFolder: '$(Build.ArtifactStagingDirectory)' 
+    - bash: ls -R echo $(Build.ArtifactStagingDirectory)
+
