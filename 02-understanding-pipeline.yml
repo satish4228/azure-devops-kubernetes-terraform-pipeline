@@ -14,10 +14,10 @@ stages:
   jobs:
   - job: SecondJob
     steps:
-    - bash: echo build SecondJob
-    - bash: echo java -version
-    - bash: echo mvn -version
-    - bash: ls -R echo $(Build.ArtifactStagingDirectory)
+    - bash: build SecondJob
+    - bash: java -version
+    - bash: mvn -version
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
@@ -25,5 +25,5 @@ stages:
           **/*.yaml
           **/*.tf
         TargetFolder: '$(Build.ArtifactStagingDirectory)' 
-    - bash: ls -R echo $(Build.ArtifactStagingDirectory)
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
 
