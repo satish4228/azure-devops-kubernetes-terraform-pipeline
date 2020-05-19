@@ -6,8 +6,15 @@
 trigger:
 - master
 
+strategy:
+  matrix:
+    linux:
+      operatingSystem: 'ubuntu-latest'
+    mac:
+      operatingSystem: 'macos-latest'
+
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: $(operatingSystem)
 
 stages: 
 - stage: Build
@@ -17,16 +24,16 @@ stages:
     - bash: java -version
     - bash: mvn -version
     - bash: ls -R $(Build.ArtifactStagingDirectory)
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: |
-          **/*.yaml
-          **/*.tf
-        TargetFolder: '$(Build.ArtifactStagingDirectory)' 
-    - bash: ls -R $(Build.ArtifactStagingDirectory)
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+    # - task: CopyFiles@2
+    #   inputs:
+    #     SourceFolder: '$(System.DefaultWorkingDirectory)'
+    #     Contents: |
+    #       **/*.yaml
+    #       **/*.tf
+    #     TargetFolder: '$(Build.ArtifactStagingDirectory)' 
+    # - bash: ls -R $(Build.ArtifactStagingDirectory)
+    # - task: PublishBuildArtifacts@1
+    #   inputs:
+    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    #     ArtifactName: 'drop'
+    #     publishLocation: 'Container'
